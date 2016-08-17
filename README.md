@@ -19,7 +19,7 @@ and extract them to your web directory.
 
 ## Features
 
-  * Simple syntaxis.
+  * Simple syntax.
   * Question mark placeholders with types.
   * Named placeholders.
 
