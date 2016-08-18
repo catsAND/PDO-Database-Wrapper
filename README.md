@@ -244,11 +244,6 @@ select('SELECT * FROM `table_name` WHERE `COLUMN` = :val OR `COLUMN` :val2', arr
 SELECT * FROM `table_name` WHERE `COLUMN` = 'VALUE' OR `COLUMN2` = 'VALUE';
 ```
 
-
-## Thanks to
-* [Indieteq](https://github.com/indieteq)
-* [Tino Ehrich](https://github.com/fightbulc)
-
 ## Support
 If you like this script please support by staring or forking the repository.
 
@@ -258,6 +253,10 @@ Always welcome
 
 * Create an [issue](https://github.com/catsAND/PDO-Database-Wrapper/issues) on GitHub, if you have found a bug or for enhancement.
 * Create a [Pull requests](https://github.com/catsAND/PDO-Database-Wrapper/pulls) for open bug/feature issues.
+
+## Thanks to
+* [Indieteq](https://github.com/indieteq)
+* [Tino Ehrich](https://github.com/fightbulc)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/catsAND/PDO-Database-Wrapper/blob/master/LICENSE) file for details
