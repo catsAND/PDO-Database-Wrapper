@@ -226,7 +226,7 @@ select('UPDATE `table_name` SET ?h', array('COLUMN1' => 'One', 'COLUMN2' => 'Two
 UPDATE `table_name` SET `COLUMN1` = 'One', `COLUMN2` = 'Two', `COLUMN3` = 'Three';
 ```
 
-**?w — bind value as string array with key as column name and value as column value.**
+**?w — bind value as string array with key as column name and value as column value with delimiter AND.**
 
 ```php
 select('SELECT * FROM `table_name` WHERE ?w', array('COLUMN1' => 'Three', 'COLUMN2' => 'Two', 'COLUMN3' => 'One'));
