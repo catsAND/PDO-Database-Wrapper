@@ -241,6 +241,7 @@ class Database
 		}
 
 		$this->queue = new \SplQueue();
+		$this->queue->setIteratorMode(\SplDoublyLinkedList::IT_MODE_DELETE);
 	}
 
 	/**
@@ -516,8 +517,10 @@ class Database
 	 */
 	protected function runQueue()
 	{
-		for($i = 0; $i < $this->queue->count(); $i++) {
-			$this->getLastStatement()->bindValue((isset($this->queue[$i][2]) ? $this->queue[$i][2] : $i + 1), $this->queue[$i][0], $this->queue[$i][1]);
+		$i = 1;
+		foreach($this->queue as $val) {
+			$this->getLastStatement()->bindValue((isset($val[2]) ? $val[2] : $i), $val[0], $val[1]);
+			$i++;
 		}
 		$this->closeQueue();
 	}
