@@ -10,7 +10,7 @@ Simple PDO Wrapper with named and question mark placeholders for easy and fast d
 
 ### Download the files.
 
-* You can [download](https://github.com/catsAND/PDO-Database-Wrapper/archive/master.zip) them directly 
+* You can [download](https://github.com/catsAND/PDO-Database-Wrapper/archive/v1.0.zip) them directly 
 and extract them to your web directory.
 
 ### Composer
