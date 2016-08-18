@@ -511,8 +511,6 @@ class Database
 	/**
 	 * Start queue that bind values
 	 *
-	 * @todo Rewrite fucntion using function from SplQueue
-	 *
 	 * @return void
 	 */
 	protected function runQueue()
