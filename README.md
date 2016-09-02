@@ -13,9 +13,13 @@ Simple PDO Wrapper with named and question mark placeholders for easy and fast d
 * You can [download](https://github.com/catsAND/PDO-Database-Wrapper/archive/v1.0.zip) them directly 
 and extract them to your web directory.
 
-### Composer
+### [Composer](https://getcomposer.org)
 
-* `composer require catsand/pdo-database-wrapper`
+* `composer require catsand/pdo-database-wrapper` 
+
+### Clone the repo
+
+* `git clone https://github.com/catsAND/PDO-Database-Wrapper.git`
 
 ## Features
 
