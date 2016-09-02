@@ -15,7 +15,7 @@ and extract them to your web directory.
 
 ### Composer
 
-* In progress
+* `composer require catsand/pdo-database-wrapper`
 
 ## Features
 
