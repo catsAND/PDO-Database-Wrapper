@@ -1,5 +1,5 @@
 {
-    "name": "catsAND/PDO-Database-Wrapper",
+    "name": "catsand/pdo-database-wrapper",
     "description": "PDO wrapper with easy syntax for fast development :+1:",
     "keywords": ["pdo","wrapper","mysql","database"],
     "homepage": "https://github.com/catsAND/PDO-Database-Wrapper",
