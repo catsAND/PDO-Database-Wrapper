@@ -1,0 +1,24 @@
+---
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - php
+  fixme:
+    enabled: true
+  phpmd:
+    enabled: true
+    checks:
+      Design/TooManyMethods:
+        enabled: false
+      Design/TooManyPublicMethods:
+        enabled: false
+      Design/WeightedMethodCount:
+        enabled: false
+      CyclomaticComplexity:
+        enabled: false
+ratings:
+  paths:
+  - "**.php"
+exclude_paths: []
