@@ -131,7 +131,7 @@ Return numbers of affected rows
 ### Examples
 
 ```php
-  $db = new Database('localhost', 'dbname', 'user', 'passwprd');
+  $db = new Database\Database('localhost', 'dbname', 'user', 'password');
   $result = $db->select('SELECT COLUMN1, COLUMN2, COLUMN3 FROM `table_name` WHERE COLUMN4 = ?s AND COLUMN5 = ?i OR COLUMN6 = ?', 'column4', 5, 'column6');
 ```
 
