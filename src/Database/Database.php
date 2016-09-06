@@ -484,13 +484,13 @@ class Database
 	{
 		$this->clearLastStatement();
 		$this->initQueue();
-		// first arguments 100% sql query
-		$sql = $args[0];
+		$sql = $args[0]; // first arguments 100% sql query
 
 		if (count($args) > 1) {
 			if (preg_match(self::SQL_REGEX, $sql) === 1) {
 				$sql = preg_split(self::SQL_REGEX, $sql, -1, PREG_SPLIT_DELIM_CAPTURE);
-				for ($i = 1, $n = 1; $n < count($sql); $n += 2, $i++) {
+				$count = count($sql);
+				for ($i = 1, $n = 1; $n < $count; $n += 2, $i++) {
 					$sql[$n] = $this->parseSqlParam($sql[$n], $args[$i]);
 				}
 				$sql = implode('', $sql);
