@@ -91,28 +91,30 @@ class Database
 	{
 		$dsn = 'mysql:host=' . $host . ';';
 
-		if(isset($options['port'])) {
+		if (isset($options['port'])) {
 			$dsn .= 'port=' . $options['port'] . ';';
 		}
 
-		if(isset($options['unixSocket'])) {
+		if (isset($options['unixSocket'])) {
 			$dsn = 'mysql:unix_socket=' . $options['unixSocket'] . ';';
 		}
 
 		$dsn .= 'dbname=' . $dbName;
 
-		if(isset($options['charset'])) {
+		if (isset($options['charset'])) {
 			$dsn .= ';charset=' . $options['charset'];
 		}
 
 		try {
-			$this->stmt = new \PDO($dsn, $user, $pass, array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES " . (isset($options['charset']) ? $options['charset'] : 'utf8')));
+			$this->stmt = new \PDO($dsn, $user, $pass, array(
+				\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES " . (isset($options['charset']) ? $options['charset'] : 'utf8')
+			));
 
-			if(isset($options['fetchMode'])) {
+			if (isset($options['fetchMode'])) {
 				$this->setFetchMode($options['fetchMode']);
 			}
 		} catch (\PDOException $e) {
-			if($this->debug === true) {
+			if ($this->debug === true) {
 				throw new Exception();
 			}
 		}
@@ -143,7 +145,7 @@ class Database
 	 */
 	protected function setFetchMode($fetchMode)
 	{
-		if(!is_int($fetchMode)) {
+		if (!is_int($fetchMode)) {
 			throw new Exception('Unknown fetch mode.');
 		}
 
@@ -238,7 +240,7 @@ class Database
 	 */
 	protected function initQueue()
 	{
-		if($this->hasQueue()) {
+		if ($this->hasQueue()) {
 			return false;
 		}
 
@@ -382,6 +384,7 @@ class Database
 				break;
 			case '?q': // string without html
 				$val = strip_tags($val);
+				// no break
 			case '?s': // string
 			case '?f': // float
 				$this->bindStr($val);
@@ -403,52 +406,52 @@ class Database
 				$key = $val;
 				break;
 			case '?a': // integer array
-				if(is_array($val)) {
+				if (is_array($val)) {
 					$key = $this->fill($val);
 					foreach ($val as $v) {
 						$this->bindInt($v);
 					}
-				} else {
-					$this->bindInt($value);
-					$key = '?';
+					break;
 				}
+				$this->bindInt($value);
+				$key = '?';
 				break;
 			case '?j': // string array
-				if(is_array($val)) {
+				if (is_array($val)) {
 					$key = $this->fill($val);
 					foreach ($val as $v) {
 						$this->bindStr($v);
 					}
-				} else {
-					$this->bindStr($value);
-					$key = '?';
+					break;
 				}
+				$this->bindStr($value);
+				$key = '?';
 				break;
 			case '?h': // string array with column name and without delimeter
-				if(is_array($val)) {
+				if (is_array($val)) {
 					$tableNames = array();
 					foreach ($val as $k => $v) {
 						$tableNames[] = preg_replace(self::COLUMN_REGEX, '', $k);
 						$this->bindStr($v);
 					}
 					$key = implode(' = ?, ', $tableNames) . ' = ?';
-				} else {
-					$this->bindStr($val);
-					$key = '?';
+					break;
 				}
+				$this->bindStr($val);
+				$key = '?';
 				break;
 			case '?w': // string array with column name and delimeter AND
-				if(is_array($val)) {
+				if (is_array($val)) {
 					$tableNames = array();
 					foreach ($val as $k => $v) {
 						$tableNames[] = preg_replace(self::COLUMN_REGEX, '', $k);
 						$this->bindStr($v);
 					}
 					$key = implode(' = ? AND ', $tableNames) . ' = ?';
-				} else {
-					$this->bindStr($val);
-					$key = '?';
+					break;
 				}
+				$this->bindStr($val);
+				$key = '?';
 				break;
 			default:
 				$key = '';
@@ -484,10 +487,10 @@ class Database
 		// first arguments 100% sql query
 		$sql = $args[0];
 
-		if(count($args) > 1) {
-			if(preg_match(self::SQL_REGEX, $sql) === 1) {
+		if (count($args) > 1) {
+			if (preg_match(self::SQL_REGEX, $sql) === 1) {
 				$sql = preg_split(self::SQL_REGEX, $sql, -1, PREG_SPLIT_DELIM_CAPTURE);
-				for($i = 1, $n = 1; $n < count($sql); $n += 2, $i++) {
+				for ($i = 1, $n = 1; $n < count($sql); $n += 2, $i++) {
 					$sql[$n] = $this->parseSqlParam($sql[$n], $args[$i]);
 				}
 				$sql = implode('', $sql);
@@ -502,7 +505,7 @@ class Database
 		$query->execute();
 
 		if ($query->errorCode() !== '00000') {
-			if($this->debug === true) {
+			if ($this->debug === true) {
 				throw new Exception($sql);
 			}
 		}
@@ -518,7 +521,7 @@ class Database
 	protected function runQueue()
 	{
 		$i = 1;
-		foreach($this->queue as $val) {
+		foreach ($this->queue as $val) {
 			$this->getLastStatement()->bindValue((isset($val[2]) ? $val[2] : $i), $val[0], $val[1]);
 			$i++;
 		}
@@ -735,15 +738,15 @@ class Database
 	{
 		$this->initQueue();
 		$values = array();
-		if(isset($inserts[0]) && is_array($inserts[0])) {
-			if(!is_array($columns)) {
+		if (isset($inserts[0]) && is_array($inserts[0])) {
+			if (!is_array($columns)) {
 				$columns = $this->getInsertColumns($inserts[0]);
 			}
-			foreach($inserts as $val) {
+			foreach ($inserts as $val) {
 				$values[] = $this->getInsertValues($val);
 			}
 		} else {
-			if(!is_array($columns)) {
+			if (!is_array($columns)) {
 				$columns = $this->getInsertColumns($inserts);
 			}
 			$values[] = $this->getInsertValues($inserts);
@@ -758,15 +761,15 @@ class Database
 	{
 		$this->initQueue();
 		$values = array();
-		if(is_array($inserts[0])) {
-			if(!is_array($columns)) {
+		if (is_array($inserts[0])) {
+			if (!is_array($columns)) {
 				$columns = $this->getInsertColumns($inserts[0]);
 			}
-			foreach($inserts as $val) {
+			foreach ($inserts as $val) {
 				$values[] = $this->getInsertValues($val);
 			}
 		} else {
-			if(!is_array($columns)) {
+			if (!is_array($columns)) {
 				$columns = $this->getInsertColumns($inserts);
 			}
 			$values[] = $this->getInsertValues($inserts);
@@ -781,15 +784,15 @@ class Database
 	{
 		$this->initQueue();
 		$values = array();
-		if(is_array($inserts[0])) {
-			if(!is_array($columns)) {
+		if (is_array($inserts[0])) {
+			if (!is_array($columns)) {
 				$columns = $this->getInsertColumns($inserts[0]);
 			}
-			foreach($inserts as $val) {
+			foreach ($inserts as $val) {
 				$values[] = $this->getInsertValues($val);
 			}
 		} else {
-			if(!is_array($columns)) {
+			if (!is_array($columns)) {
 				$columns = $this->getInsertColumns($inserts);
 			}
 			$values[] = $this->getInsertValues($inserts);
@@ -865,8 +868,7 @@ class Database
 			$arr[] = preg_replace(self::COLUMN_REGEX, '', $val) . ' WRITE';
 		}
 
-		$this->stmt->exec('LOCK TABLES ' . implode(',', $arr));
-		return true;
+		return $this->stmt->exec('LOCK TABLES ' . implode(',', $arr));
 	}
 
 	/**
@@ -876,7 +878,6 @@ class Database
 	 */
 	public function unlock()
 	{
-		$this->stmt->exec('UNLOCK TABLES');
-		return true;
+		return $this->stmt->exec('UNLOCK TABLES');
 	}
 }
