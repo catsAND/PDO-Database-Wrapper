@@ -3,7 +3,7 @@ Simple PDO Wrapper with named and question mark placeholders for easy and fast d
 
 ## Requirements
 
-* `PHP 5.3` or greater
+* PHP 5.3 or greater
 * PDO extension
 
 ## Instalation
@@ -77,7 +77,7 @@ public unlock();
 ```php
 public query($sql, ...value)
 ```
-Return numbers of affected rows
+Return number of affected rows
 
 
 * select
@@ -194,7 +194,7 @@ SELECT * FROM `table_name` WHERE `COLUMN` = '3.1415926535' OR `COLUMN` = '2.7182
 **?n — bind value as null**
 
 
-**?q — bind value as sting without HTML tags**
+**?q — bind value as string without HTML tags**
 
 ```php
 select('SELECT * FROM `table_name` WHERE `COLUMN` = ?s', 'string');
